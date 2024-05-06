@@ -1,5 +1,4 @@
 $(document).ready(function () {
-  // Initialize an empty object or dictionary to store the amenities
   const selectedAmenities = {};
 
   // Listen for changes on input checkboxes within elements with class 'amenity-checkbox'
@@ -19,7 +18,21 @@ $(document).ready(function () {
     }
 
     // Update the 'h4' tag inside the div 'Amenities' with the list of selected amenities
-    const text = Object.values(selectedAmenities).join(', '); // Concatenates the names of the amenities
+    const text = Object.values(selectedAmenities).join(', ');
     $('.amenities h4').text(text);
   });
+
+  // Function to update API status
+  function updateApiStatus () {
+    $.get('http://localhost:5001/api/v1/status/', function (data) {
+      if (data.status === 'OK') {
+        $('#api_status').addClass('available');
+      } else {
+        $('#api_status').removeClass('available');
+      }
+    });
+  }
+
+  // Call the function initially
+  updateApiStatus();
 });
